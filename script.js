@@ -3,12 +3,23 @@ console.log("testing if this works")
 const humanSelectionRock = document.querySelector("#rock");
 const humanSelectionPaper = document.querySelector("#paper");
 const humanSelectionScissors = document.querySelector("#scissors");
+const resetGameButton = document.querySelector("#resetGame");
+
+const humanChoiceDiv = document.querySelector("#humanChoice");
+const computerChoiceDiv = document.querySelector("#computerChoice");
+const resultDiv = document.querySelector("#result");
+const gamesPlayedDiv = document.querySelector("#gamesPlayed");
+
 
 let humanChoice = "";
 let gamesPlayed = 0;
 let humanScore = 0;
 let computerScore = 0;
 
+resetGameButton.addEventListener("click", function() {
+    gamesPlayed = 0;
+    gamesPlayedDiv.textContent = `games played - ${gamesPlayed}`
+})
 
 
 function getComputerChoice() {
@@ -45,15 +56,25 @@ humanSelectionScissors.addEventListener("click", function() {
 
 
 function playGame() {
-
-    let computerChoice = getComputerChoice();
-    let result = playRound(humanChoice, computerChoice)
-    console.log(`You chose ${humanChoice} while Computer chose ${computerChoice}`)
-    console.log(`${result}`)
-    console.log(`Your score is ${humanScore} and Computer score is ${computerScore}`)
-
-
-
+    
+    if (gamesPlayed === 5) {
+        console.log("GAMEOVER")
+        humanSelectionRock.disabled = true;
+        humanSelectionPaper.disabled = true;
+        humanSelectionScissors.disabled = true;
+    
+    }
+    else{
+        gamesPlayed += 1;
+        let computerChoice = getComputerChoice();
+        let result = playRound(humanChoice, computerChoice)
+        humanChoiceDiv.textContent = `You choose ${humanChoice}`;
+        computerChoiceDiv.textContent = `Computer choose ${computerChoice}`;
+        resultDiv.textContent = `${result}`;
+        gamesPlayedDiv.textContent = `Games played - ${gamesPlayed}`
+        }
+    
+    }
 
 
     function playRound(humanChoice, computerChoice) {
@@ -86,9 +107,6 @@ function playGame() {
         else if (humanChoice == "scissors" && computerChoice == "rock") {
             computerScore += 1;
             return `Computer Wins - ${computerChoice} beats ${humanChoice}`;
-        }
-    }
-
+        } 
+    
 }
-
-// playGame();

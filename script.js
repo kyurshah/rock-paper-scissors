@@ -15,10 +15,19 @@ let humanChoice = "";
 let gamesPlayed = 0;
 let humanScore = 0;
 let computerScore = 0;
+let overallWinner = "";
 
 resetGameButton.addEventListener("click", function() {
     gamesPlayed = 0;
+    humanScore = 0;
+    computerScore = 0;
     gamesPlayedDiv.textContent = `games played - ${gamesPlayed}`
+    humanChoiceDiv.textContent = `human score - ${humanScore}`;
+    computerChoiceDiv.textContent = `computer score - ${computerScore}`;
+    humanSelectionRock.disabled = false;
+    humanSelectionPaper.disabled = false;
+    humanSelectionScissors.disabled = false;
+    resultDiv.textContent = `select one of the buttons to start playing`;
 })
 
 
@@ -58,11 +67,22 @@ humanSelectionScissors.addEventListener("click", function() {
 function playGame() {
     
     if (gamesPlayed === 5) {
-        console.log("GAMEOVER")
         humanSelectionRock.disabled = true;
         humanSelectionPaper.disabled = true;
         humanSelectionScissors.disabled = true;
-    
+        humanChoiceDiv.textContent = `YOUR SCORE IS ${humanScore}`;
+        computerChoiceDiv.textContent = 
+        `COMPUTER SCORE IS ${computerScore}`;
+        if (computerScore < humanScore) {
+            overallWinner = "YOU WON!"
+        }
+        else if (computerScore === humanScore) {
+            overallWinner = "ITS A TIE"
+        }
+        else {
+            overallWinner = "COMPUTER WON!"
+        }
+        resultDiv.textContent = `${overallWinner}`
     }
     else{
         gamesPlayed += 1;
@@ -73,6 +93,7 @@ function playGame() {
         resultDiv.textContent = `${result}`;
         gamesPlayedDiv.textContent = `Games played - ${gamesPlayed}`
         }
+
     
     }
 
